@@ -51,6 +51,12 @@ module.exports.getAllUsers = function(id,callback){
   const oid = mongoose.Types.ObjectId(id);
   User.find({ _id: { $ne: oid }}, callback);
 }
+
+module.exports.getUsersBySkill = function(id,callback){
+  const sid = mongoose.Types.ObjectId(id);
+  User.find({ skills: sid }}, callback);
+}
+
 module.exports.comparePassword = function(password, hash, callback){
   bcrypt.compare(password, hash, (err,isMatch)=>{
     if(err){

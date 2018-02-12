@@ -94,4 +94,27 @@ router.route('/')
 
 });
 
+//GET ALL USERS BY SKILL
+router.route('/skill/:id')
+.post(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
+  const id = req.body.id;
+  console.log('posted: ' + id);
+  User.getUsersBySkill(id, (err, users)=>{
+    if(err){
+      res.json({
+        users:[],
+        success:false,
+        message:'failed to get users'
+      });
+    }else{
+      res.json({
+        users:users,
+        success:true,
+        message:'got users'
+      });
+    }
+  })
+
+});
+
 module.exports = router;
