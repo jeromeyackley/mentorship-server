@@ -85,10 +85,8 @@ router.route('/auth')
 
 //GET ALL USERS
 router.route('/')
-.post(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
-  const id = req.body.id;
-  console.log('posted: ' + id);
-  User.getAllUsers(id, (err, users)=>{
+.get(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
+  User.getAllUsers((err, users)=>{
     if(err){
       res.json({
         users:[],
@@ -103,15 +101,33 @@ router.route('/')
       });
     }
   })
+});
 
+//GET ALL USERS NOT ME
+router.route('/notme')
+.get(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
+    let currentUser = req.user.id;
+    User.getAllUsersNotMe(currentUser, (err, users)=>{
+        if(err){
+            res.json({
+                users:[],
+                success:false,
+                message:'failed to get users'
+            });
+        }else{
+            res.json({
+                users:users,
+                success:true,
+                message:'got users'
+            });
+        }
+    })
 });
 
 //GET ALL USERS BY SKILL
-router.route('/skill/:id')
-.post(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
-  const id = req.body.id;
-  console.log('posted: ' + id);
-  User.getUsersBySkill(id, (err, users)=>{
+router.route('/skills/:id')
+.get(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
+  User.getUsersBySkill((err, users)=>{
     if(err){
       res.json({
         users:[],
@@ -126,7 +142,27 @@ router.route('/skill/:id')
       });
     }
   })
+});
 
+//GET ALL USERS BY SKILL NOT ME
+router.route('/skills/notme/:id')
+.get(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
+  const id = req.body.id;
+  User.getUsersBySkillNotMe(id, (err, users)=>{
+    if(err){
+      res.json({
+        users:[],
+        success:false,
+        message:'failed to get users'
+      });
+    }else{
+      res.json({
+        users:users,
+        success:true,
+        message:'got users'
+      });
+    }
+  })
 });
 
 module.exports = router;
