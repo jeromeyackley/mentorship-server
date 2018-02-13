@@ -53,12 +53,21 @@ module.exports.addUser = function(newUser, callback){
     });
   });
 }
-module.exports.getAllUsers = function(id,callback){
+
+module.exports.getAllUsers = function(callback){
+  User.find({}, callback);
+}
+
+module.exports.getAllUsersNotMe = function(id, callback){
   const oid = mongoose.Types.ObjectId(id);
   User.find({ _id: { $ne: oid }}, callback);
 }
 
-module.exports.getUsersBySkill = function(id,callback){
+module.exports.getUsersBySkill = function(callback){
+  User.find({}, callback);
+}
+
+module.exports.getUsersBySkillNotMe = function(id,callback){
   const sid = mongoose.Types.ObjectId(id);
   User.find({ skills: sid }, callback);
 }
