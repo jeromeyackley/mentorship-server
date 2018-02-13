@@ -26,6 +26,9 @@ const UserSchema = mongoose.Schema({
   },
   phone:{
     type:String
+  },
+  isActive:{
+    type:Boolean
   }
 });
 

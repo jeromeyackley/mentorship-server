@@ -12,7 +12,9 @@ router.route('/register')
     first_name:req.body.firstName,
     last_name:req.body.lastName,
     email:req.body.email,
-    password:req.body.password
+    password:req.body.password,
+    phone:req.body.phone,
+    isActive:true
   });
   User.addUser(newUser, (err, user)=>{
     if(err){
