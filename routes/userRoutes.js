@@ -14,6 +14,8 @@ router.route('/register')
     email:req.body.email,
     password:req.body.password,
     phone:req.body.phone,
+    skills:[],
+    eoi:[],
     isActive:true
   });
   User.addUser(newUser, (err, user)=>{
@@ -25,7 +27,11 @@ router.route('/register')
     }else{
       res.json({
         success:true,
-        message:'user registered'
+        message:'user registered',
+        user:{
+          email:req.body.email,
+          password:req.body.password
+        }
       });
     }
   });
@@ -63,7 +69,11 @@ router.route('/auth')
                 id:user._id,
                 first_name: user.first_name,
                 last_name: user.last_name,
-                email: user.email
+                email: user.email,
+                phone: user.phone,
+                isActive: user.isActive,
+                skills: user.skills,
+                eoi: user.eoi
               }
             });
       }else{
