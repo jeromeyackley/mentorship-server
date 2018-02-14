@@ -83,8 +83,7 @@ module.exports.getAllUsers = function(id,callback){
 }
 
 module.exports.getUsersBySkill = function(id,callback){
-  const sid = mongoose.Types.ObjectId(id);
-  User.find({ skills: sid }, callback);
+  User.find({ skills: id }, callback);
 }
 
 module.exports.comparePassword = function(password, hash, callback){
