@@ -91,78 +91,72 @@ router.route('/')
       res.json({
         users:[],
         success:false,
-        message:'failed to get users'
+        message:'400 - failed to get users'
       });
     }else{
       res.json({
         users:users,
         success:true,
-        message:'got users'
+        message:'200 - got users'
       });
     }
   })
 });
 
-//GET ALL USERS NOT ME
-router.route('/notme')
+//GET USER
+router.route('/:id')
 .get(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
-    let currentUser = req.user.id;
-    User.getAllUsersNotMe(currentUser, (err, users)=>{
+  User.getUserById(req.params.id, (err, user)=>{
+    if(err){
+      res.json({
+        user:{},
+        success:false,
+        message:'400 - failed to get a user'
+      });
+    }else{
+      res.json({
+        user:user,
+        success:true,
+        message:'200 - got a user, lucky you'
+      });
+    }
+  })
+});
+
+//TODO: This update doesn't work.
+//UPDATE USER
+router.route('/:id')
+  .put(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
+    let updateUser = new User({
+      first_name:req.body.firstName,
+      last_name:req.body.lastName,
+      email:req.body.email,
+      phone:req.body.phone,
+      skills:req.body.skills,
+      eoi:req.body.eoi,
+      isActive:req.body.isActive,
+      _id:req.params.id
+    });
+    User.getUserById(req.params.id, (err, user)=>{
+      user
+      User.updateUser(updateUser, (err, user)=>{
         if(err){
-            res.json({
-                users:[],
-                success:false,
-                message:'failed to get users'
-            });
+          res.json({
+            success:false,
+            message:'failed to register user'
+          });
         }else{
-            res.json({
-                users:users,
-                success:true,
-                message:'got users'
-            });
+          res.json({
+            success:true,
+            message:'user registered',
+            user:{
+              email:req.body.email,
+              password:req.body.password
+            }
+          });
         }
+      });
     })
-});
-
-//GET ALL USERS BY SKILL
-router.route('/skills/:id')
-.get(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
-  User.getUsersBySkill((err, users)=>{
-    if(err){
-      res.json({
-        users:[],
-        success:false,
-        message:'failed to get users'
-      });
-    }else{
-      res.json({
-        users:users,
-        success:true,
-        message:'got users'
-      });
-    }
-  })
-});
-
-//GET ALL USERS BY SKILL NOT ME
-router.route('/skills/notme/:id')
-.get(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
-  const id = req.body.id;
-  User.getUsersBySkillNotMe(id, (err, users)=>{
-    if(err){
-      res.json({
-        users:[],
-        success:false,
-        message:'failed to get users'
-      });
-    }else{
-      res.json({
-        users:users,
-        success:true,
-        message:'got users'
-      });
-    }
-  })
-});
+  });
 
 module.exports = router;

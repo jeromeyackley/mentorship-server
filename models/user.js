@@ -54,22 +54,17 @@ module.exports.addUser = function(newUser, callback){
   });
 }
 
+module.exports.updateUser = function(user, callback){
+  this.getUserById(user.id, callback);
+  .save(callback);
+}
+
 module.exports.getAllUsers = function(callback){
   User.find({}, callback);
 }
 
-module.exports.getAllUsersNotMe = function(id, callback){
-  const oid = mongoose.Types.ObjectId(id);
-  User.find({ _id: { $ne: oid }}, callback);
-}
-
 module.exports.getUsersBySkill = function(callback){
   User.find({}, callback);
-}
-
-module.exports.getUsersBySkillNotMe = function(id,callback){
-  const sid = mongoose.Types.ObjectId(id);
-  User.find({ skills: sid }, callback);
 }
 
 module.exports.comparePassword = function(password, hash, callback){
