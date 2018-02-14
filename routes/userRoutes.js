@@ -84,9 +84,9 @@ router.route('/auth')
 });
 
 //GET ALL USERS
-router.route('/')
-.post(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
-  const id = req.body.id;
+router.route('/:id')
+.get((req,res,next)=>{
+  const id = req.params.id;
   console.log('posted: ' + id);
   User.getAllUsers(id, (err, users)=>{
     if(err){
