@@ -7,7 +7,7 @@ const config = require('../config/database.js');
 
 
 //GET ALL SKILLS
-router.route('/all')
+router.route('/')
 .get((req,res,next)=>{
   Skill.getAllSkills((err, skills)=>{
     if(err){

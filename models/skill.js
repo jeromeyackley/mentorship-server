@@ -17,6 +17,6 @@ module.exports.getSkillsById = function(id, callback){
 module.exports.addSkill = function(newSkill, callback){
   newSkill.save(callback);
 }
-module.exports.getAllSkills = function(id,callback){
+module.exports.getAllSkills = function(callback){
   Skill.find({}, callback);
 }
