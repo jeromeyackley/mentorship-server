@@ -21,7 +21,7 @@ const UserSchema = mongoose.Schema({
   skills: {
     type:[String],
   },
-  eoi:{
+  aoi:{
     type:[String],
   },
   phone:{
@@ -53,6 +53,30 @@ module.exports.addUser = function(newUser, callback){
     });
   });
 }
+
+module.exports.updateUser = function(id,newUser, callback){
+  User.findById(id, (err, user)=>{
+    user.skills = newUser.skills;
+    user.aoi = newUser.aoi;
+    user.first_name = newUser.first_name;
+    user.last_name = newUser.last_name;
+    user.phone = newUser.phone;
+    user.isActive = newUser.isActive;
+    user.email = newUser.email;
+
+    user.save(callback);
+  });
+//   Tank.findById(id, function (err, tank) {
+//   if (err) return handleError(err);
+//
+//   tank.size = 'large';
+//   tank.save(function (err, updatedTank) {
+//     if (err) return handleError(err);
+//     res.send(updatedTank);
+//   });
+// });
+}
+
 module.exports.getAllUsers = function(id,callback){
   const oid = mongoose.Types.ObjectId(id);
   User.find({ _id: { $ne: oid }}, callback);

@@ -15,7 +15,7 @@ router.route('/register')
     password:req.body.password,
     phone:req.body.phone,
     skills:[],
-    eoi:[],
+    aoi:[],
     isActive:true
   });
   User.addUser(newUser, (err, user)=>{
@@ -73,7 +73,7 @@ router.route('/auth')
                 phone: user.phone,
                 isActive: user.isActive,
                 skills: user.skills,
-                eoi: user.eoi
+                aoi: user.aoi
               }
             });
       }else{
@@ -103,8 +103,28 @@ router.route('/')
       });
     }
   })
-
 });
+
+// UPDATE USER
+router.route('/:id')
+.put(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
+  const user = req.body;
+  const id = req.params.id;
+  User.updateUser(id, user, (err, user)=>{
+    if(err){
+      res.json({
+        success:false,
+        message:'failed to update users'
+      });
+    }else{
+      res.json({
+        user:user,
+        success:true,
+        message:'user updated'
+      });
+    }
+  })
+})
 
 //GET ALL USERS BY SKILL
 router.route('/skill/:id')
