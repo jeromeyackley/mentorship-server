@@ -107,7 +107,7 @@ router.route('/:id')
 
 // UPDATE USER
 router.route('/:id')
-.put(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
+.put((req,res,next)=>{
   const user = req.body;
   const id = req.params.id;
   User.updateUser(id, user, (err, user)=>{
@@ -127,9 +127,9 @@ router.route('/:id')
 })
 
 //GET ALL USERS BY SKILL
-router.route('/skill/:id')
-.post(passport.authenticate('jwt', {session:false}),(req,res,next)=>{
-  const id = req.body.id;
+router.route('/skill/:id').get
+((req,res,next)=>{
+  const id = req.params.id;
   console.log('posted: ' + id);
   User.getUsersBySkill(id, (err, users)=>{
     if(err){
