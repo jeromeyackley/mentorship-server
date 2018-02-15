@@ -66,7 +66,7 @@ router.route('/auth')
               success:true,
               token: 'JWT ' + token,
               user:{
-                id:user._id,
+                _id:user._id,
                 first_name: user.first_name,
                 last_name: user.last_name,
                 email: user.email,
@@ -118,7 +118,16 @@ router.route('/:id')
       });
     }else{
       res.json({
-        user:user,
+        user:{
+          _id:user._id,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          email: user.email,
+          phone: user.phone,
+          isActive: user.isActive,
+          skills: user.skills,
+          aoi: user.aoi
+        },
         success:true,
         message:'user updated'
       });
