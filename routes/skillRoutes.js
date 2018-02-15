@@ -41,7 +41,8 @@ router.route('/add')
     }else{
       res.json({
         success:true,
-        message:'skill added'
+        message:'skill added',
+        skill:result
       });
     }
   });
