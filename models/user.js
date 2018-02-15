@@ -54,7 +54,7 @@ module.exports.addUser = function(newUser, callback){
   });
 }
 
-module.exports.updateUser = function(id,newUser, callback){
+module.exports.updateUser = function(id, newUser, callback){
   User.findById(id, (err, user)=>{
     user.skills = newUser.skills;
     user.aoi = newUser.aoi;
@@ -83,7 +83,8 @@ module.exports.getAllUsers = function(id,callback){
 }
 
 module.exports.getUsersBySkill = function(id,callback){
-  User.find({ skills: id }, callback);
+  const sid = mongoose.Types.ObjectId(id);
+  User.find({ skills: sid }, callback);
 }
 
 module.exports.comparePassword = function(password, hash, callback){

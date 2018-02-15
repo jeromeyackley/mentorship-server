@@ -48,4 +48,27 @@ router.route('/add')
   });
 });
 
+
+//GET SKILLS BY USER ID
+router.route('/')
+.post((req,res,next)=>{
+  const list = req.body.id_list;
+  Skill.getSkillsbyId(list,(err, skills)=>{
+    if(err){
+      res.json({
+        skills:[],
+        success:false,
+        message:'failed to get skills'
+      });
+    }else{
+      res.json({
+        skills:skills,
+        success:true,
+        message:'got skills'
+      });
+    }
+  })
+});
+
+
 module.exports = router;

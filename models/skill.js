@@ -20,3 +20,7 @@ module.exports.addSkill = function(newSkill, callback){
 module.exports.getAllSkills = function(callback){
   Skill.find({}, callback);
 }
+
+module.exports.getSkillsbyId = function(list,callback){
+  // Skill.find({}, callback);
+}
