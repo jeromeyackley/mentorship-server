@@ -18,6 +18,7 @@ let port = process.env.PORT || 5000;
 // IMPORT ROUTES
 const userRoutes = require('./routes/userRoutes.js');
 const skillRoutes = require('./routes/skillRoutes.js');
+const testimonialRoutes = require('./routes/testimonialRoutes.js');
 
 //MIDDLEWARE
 app.use(cors());
@@ -31,6 +32,8 @@ require('./config/passport.js')(passport);
 app.use('/users', userRoutes);
 // SKILL ROUTES
 app.use('/skills', skillRoutes);
+// TESTIMONIAL ROUTES
+app.use('/testimonials', testimonialRoutes);
 
 app.route('/')
 .get((req,res)=>{
